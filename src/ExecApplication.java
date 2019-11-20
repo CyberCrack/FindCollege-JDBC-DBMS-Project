@@ -4,6 +4,7 @@ public class ExecApplication
     public static boolean collegeLoggedIn;
     public static boolean userLoggedIn;
     public static String collegeEmail;
+    public static String userEmail;
     public static boolean userSignedUp;
     public static boolean marksEntered;
 

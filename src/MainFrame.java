@@ -20,10 +20,7 @@ public class MainFrame
     //        MainFrame.setLogoutAdminButtonEnabled();
     //    }
 
-    public MainFrame(int a)
-    {
 
-    }
 
     public MainFrame()
     {
@@ -66,19 +63,22 @@ public class MainFrame
             {
                 if (ExecApplication.adminLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off Admin Account first, before signing into Student Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
                 else if (ExecApplication.collegeLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off College Account first, before signing into Student Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
-
                 else if (ExecApplication.userLoggedIn)
                 {
-                    UserMarksDialog usrDig = new UserMarksDialog();
-                    usrDig.setVisible(true);
+                    UserDialog userDialog = new UserDialog();
+                    userDialog.setVisible(true);
                 } else
                 {
 //                    UserSignUpProcedureDialog  userSignUpProcedureDialog = new UserSignUpProcedureDialog();
 //                     userSignUpProcedureDialog.setVisible(true);
                     UserLogin userLogin = new UserLogin();
                     userLogin.setVisible(true);
-                    if (ExecApplication.userLoggedIn) logoutUserButton.setEnabled(true);
+
                 }
+                if (ExecApplication.userLoggedIn)
+                    logoutUserButton.setEnabled(true);
+                else
+                    logoutUserButton.setEnabled(false);
             }
         });
         creditsButton.addActionListener(new ActionListener()

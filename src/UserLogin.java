@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class UserLogin extends JDialog
 {
@@ -10,6 +11,13 @@ public class UserLogin extends JDialog
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JButton newUserButton;
+    private String email;
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
 
     public UserLogin()
     {
@@ -23,7 +31,13 @@ public class UserLogin extends JDialog
         {
             public void actionPerformed(ActionEvent e)
             {
-                onOK();
+                try
+                {
+                    onOK();
+                } catch (SQLException ex)
+                {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -58,23 +72,28 @@ public class UserLogin extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                UserSignUpProcedureDialog userSignUpProcedureDialog =  new UserSignUpProcedureDialog();
+                UserSignUpProcedureDialog userSignUpProcedureDialog = new UserSignUpProcedureDialog();
                 userSignUpProcedureDialog.setVisible(true);
             }
         });
     }
 
-    private void onOK()
+    private void onOK() throws SQLException
     {
         // add your code here
         // SQL CODE
         /* On Login verify the details using SQL CODE*/
-        if (textField1.getText().equals("") && new String(passwordField1.getPassword()).equals(""))
-        {
-            ExecApplication.userLoggedIn = true;
-            UserMarksDialog userMarksDialog = new UserMarksDialog();
-            userMarksDialog.setVisible(true);
+        JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
 
+        if (jdbc_sql_execute.StudentLogin(textField1.getText().trim(), new String(passwordField1.getPassword())) == 0)
+        {
+            setEmail(textField1.getText().trim());
+            UserDialog userDialog = new UserDialog();
+            userDialog.setEmail(email);
+            System.out.println(email);
+            ExecApplication.userEmail = email;
+            userDialog.setVisible(true);
+            ExecApplication.userLoggedIn = true;
             dispose();
 
         } else

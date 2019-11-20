@@ -83,15 +83,16 @@ public class CollegeLoginDialog extends JDialog
         // add your code here
         // SQL CODE
         JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-        setEmail(textField1.getText().trim());
+
         if (jdbc_sql_execute.CollegeLogin(textField1.getText().trim(), new String(passwordField1.getPassword())) == 0)
         {
+            setEmail(textField1.getText().trim());
             CollegeDialog collegeDialog = new CollegeDialog();
             collegeDialog.setEmail(email);
             ExecApplication.collegeEmail = email;
-            System.out.println("in College Login Dialog email is: " + email);
             collegeDialog.setVisible(true);
             ExecApplication.collegeLoggedIn = true;
+            dispose();
 
 
         } else
