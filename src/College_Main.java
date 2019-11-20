@@ -22,22 +22,9 @@ public class College_Main
         College_Main.clgs = clgs;
     }
 
-    public static ArrayList<College> searchCollegs(float score)
+    public static ArrayList<College> searchCollegs()
     {
-        ArrayList<College> foundColleges = new ArrayList<College>();
-        for (College clg : clgs)
-        {
-            //if (score>=clg.getAboveScore()   && score <= clg.getBelowScore())
-            if (score >= clg.getPercentage())
-            {
-                foundColleges.add(clg);
-            }
-            /*else if (score==55)
-            {
-                foundColleges.add(clg);
-            }*/
-        }
-        return foundColleges;
+        return clgs;
     }
     /*public  static ArrayList<College> getClgs()
     {

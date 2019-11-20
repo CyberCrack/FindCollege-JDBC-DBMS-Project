@@ -75,10 +75,15 @@ public class MainFrame
                     userLogin.setVisible(true);
 
                 }
+
                 if (ExecApplication.userLoggedIn)
+                {
                     logoutUserButton.setEnabled(true);
+                }
                 else
+                {
                     logoutUserButton.setEnabled(false);
+                }
             }
         });
         creditsButton.addActionListener(new ActionListener()
@@ -133,13 +138,15 @@ public class MainFrame
                     CollegeDialog collegeDialog = new CollegeDialog();
                     collegeDialog.setEmail(ExecApplication.collegeEmail);
                     collegeDialog.setVisible(true);
-                    if (!ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(false);
+
                 } else
                 {
                     CollegeLoginDialog collegeLoginDialog = new CollegeLoginDialog();
                     collegeLoginDialog.setVisible(true);
-                    if (ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(true);
+
                 }
+                if (!ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(false);
+                if (ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(true);
             }
         });
     }

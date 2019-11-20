@@ -9,19 +9,14 @@ public class FindCollegeDialog extends JDialog
     private JButton buttonOK;
     private JButton buttonCancel;
     JTextArea textArea1;
-    float score;
+
     public FindCollegeDialog()
     {
-        System.out.println();
-    }
-    public FindCollegeDialog(float score)
-    {
-        this.score = score;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setTitle("College List");
-        setSize(500, 500);
+        setSize(650, 500);
         setLocationRelativeTo(null);
         findColleges();
 
@@ -66,7 +61,7 @@ public class FindCollegeDialog extends JDialog
     private void findColleges()
     {
         textArea1.setText("");
-        ArrayList<College> srchClg = College_Main.searchCollegs(score);
+        ArrayList<College> srchClg = College_Main.searchCollegs();
         if (srchClg.isEmpty()) textArea1.setText("No Colleges found\n");
         else
         {

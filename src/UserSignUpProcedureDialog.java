@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class UserSignUpProcedureDialog extends JDialog
 {
@@ -83,6 +84,16 @@ public class UserSignUpProcedureDialog extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                try
+                {
+                    JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
+                    jdbc_sql_execute.GetColleges(ExecApplication.userEmail);
+                } catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+
+
                 FindCollegeDialog findCollegeDialog = new FindCollegeDialog();
                 findCollegeDialog.setVisible(true);
             }

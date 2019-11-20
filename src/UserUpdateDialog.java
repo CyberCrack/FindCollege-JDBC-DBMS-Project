@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigInteger;
+import java.sql.SQLException;
+
 
 public class UserUpdateDialog extends JDialog
 {
@@ -17,14 +20,20 @@ public class UserUpdateDialog extends JDialog
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 400);
-        setTitle("User Update");
+        setTitle("User Update Dialog");
         setLocationRelativeTo(null);
 
         buttonOK.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                onOK();
+                try
+                {
+                    onOK();
+                } catch (SQLException ex)
+                {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -56,10 +65,34 @@ public class UserUpdateDialog extends JDialog
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onOK()
+    private void onOK() throws SQLException
     {
-        // add your code here
-        dispose();
+        boolean contactValid = false;
+        JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
+        if (textFieldContact.getText().trim().length() != 10) JOptionPane.showMessageDialog(null, "Please enter a valid contact number.");
+        if (textFieldContact.getText().trim().length() == 10)
+        {
+            try
+            {
+                BigInteger bigInteger = BigInteger.valueOf(Long.parseLong(textFieldContact.getText().trim()));
+                contactValid = true;
+            } catch (NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(null, "Please enter a valid contact number.");
+            }
+        }
+        if (!textFieldEmail.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$"))
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a valid Email address.");
+        } else jdbc_sql_execute.StudentUpdate(textFieldEmail.getText().trim(), ExecApplication.userEmail, 2);
+
+        if (contactValid)
+        {
+            jdbc_sql_execute.StudentUpdate(textFieldContact.getText().trim(), ExecApplication.userEmail, 1);
+        }
+        if (textFieldLocation.getText().trim().length() != 0) jdbc_sql_execute.StudentUpdate(textFieldLocation.getText().trim(), ExecApplication.userEmail, 3);
+
+
     }
 
     private void onCancel()
@@ -127,4 +160,5 @@ public class UserUpdateDialog extends JDialog
     {
         return contentPane;
     }
+
 }

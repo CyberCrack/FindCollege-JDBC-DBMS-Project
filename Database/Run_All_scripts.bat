@@ -4,3 +4,4 @@ mysql --host=localhost --user=Mayank --password=apple  < Values_colleges.sql
 mysql --host=localhost --user=Mayank --password=apple  < Values_collegeLogin.sql
 mysql --host=localhost --user=Mayank --password=apple  < Values_studentLogin.sql
 mysql --host=localhost --user=Mayank --password=apple  < Values_marks.sql
+mysql --host=localhost --user=Mayank --password=apple find_college_db  < Stored_Procedure.sql

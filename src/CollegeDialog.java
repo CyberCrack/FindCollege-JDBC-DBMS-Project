@@ -68,7 +68,6 @@ public class CollegeDialog extends JDialog
             {
                 CollegeUpdateDialog collegeUpdateDialog = new CollegeUpdateDialog();
                 collegeUpdateDialog.setEmail(email);
-                System.out.println("In college dialog email is :" + email);
                 collegeUpdateDialog.setVisible(true);
             }
         });

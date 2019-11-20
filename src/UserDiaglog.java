@@ -32,14 +32,14 @@ public class UserDiaglog extends JDialog
             {
                 //TO-DO to search
 
-                FindCollegeDialog fcd = new FindCollegeDialog((float) (Integer.parseInt(textField1.getText().trim()) + Integer.parseInt(textField2.getText().trim()) + Integer.parseInt(textField3.getText().trim()) + Integer.parseInt(textField4.getText().trim()) + Integer.parseInt(textField5.getText().trim()) + Integer.parseInt(textField6.getText().trim())) / 6);
-                fcd.setVisible(true);
-                textField1.setText("");
-                textField2.setText("");
-                textField3.setText("");
-                textField4.setText("");
-                textField5.setText("");
-                textField6.setText("");
+//                FindCollegeDialog fcd = new FindCollegeDialog((float) (Integer.parseInt(textField1.getText().trim()) + Integer.parseInt(textField2.getText().trim()) + Integer.parseInt(textField3.getText().trim()) + Integer.parseInt(textField4.getText().trim()) + Integer.parseInt(textField5.getText().trim()) + Integer.parseInt(textField6.getText().trim())) / 6);
+//                fcd.setVisible(true);
+//                textField1.setText("");
+//                textField2.setText("");
+//                textField3.setText("");
+//                textField4.setText("");
+//                textField5.setText("");
+//                textField6.setText("");
             }
         });
 

@@ -69,7 +69,7 @@ public class JDBC_SQL_Execute
         stmt.setInt(5, marks.getChemistry());
         stmt.setInt(6, marks.getComputerBiology());
         stmt.executeUpdate();
-
+        CallStoredProcedure();
         return 0;
     }
 
@@ -135,22 +135,22 @@ public class JDBC_SQL_Execute
         return 0;
     }
 
-    public int CollegeUpdate(int fees, String name) throws SQLException
+    public int CollegeUpdate(int fees, String email) throws SQLException
     {
         PreparedStatement stmt = null;
         stmt = conn.prepareStatement("update colleges set FEES=? where EMAIL=?");
         stmt.setInt(1, fees);
-        stmt.setString(2, name);
+        stmt.setString(2, email);
         stmt.executeUpdate();
         return 0;
     }
 
-    public int CollegeUpdate(String contact, String name) throws SQLException
+    public int CollegeUpdate(String contact, String email) throws SQLException
     {
         PreparedStatement stmt = null;
         stmt = conn.prepareStatement("update colleges set CONTACT=? where EMAIL=?");
         stmt.setString(1, contact);
-        stmt.setString(2, name);
+        stmt.setString(2, email);
         stmt.executeUpdate();
         return 0;
     }
@@ -191,4 +191,63 @@ public class JDBC_SQL_Execute
         stmt.executeUpdate();
         Student_Main.studs.clear();
     }
+    public void StudentLoginUpdate(String newEmail,String email) throws SQLException
+    {
+        PreparedStatement stmt = null;
+        stmt = conn.prepareStatement("update LOGIN_STUDENTS set EMAIL=? where EMAIL=?");
+        stmt.setString(1, newEmail);
+        stmt.setString(2, email);
+        stmt.executeUpdate();
+    }
+    public void StudentUpdate(String newValue,String email,int type) throws SQLException
+    {
+        PreparedStatement stmt = null;
+        if(type==1)
+            stmt = conn.prepareStatement("update students set CONTACT=? where EMAIL=?");
+        else if(type==2)
+        {
+            stmt = conn.prepareStatement("update students set EMAIL=? where EMAIL=?");
+            StudentLoginUpdate(newValue,email);
+        }
+        else if(type==3)
+            stmt = conn.prepareStatement("update students set LOCATION=? where EMAIL=?");
+
+        assert stmt != null;
+        stmt.setString(1, newValue);
+        stmt.setString(2, email);
+        stmt.executeUpdate();
+    }
+    public void CallStoredProcedure() throws SQLException
+    {
+        CallableStatement callableStatement;
+        callableStatement = conn.prepareCall("{call GetAvgPer()}");
+        callableStatement.executeUpdate();
+    }
+    public void GetColleges(String email) throws Exception
+    {
+        CallStoredProcedure();
+        ResultSet resultSet;
+        PreparedStatement preparedStatement;
+        College_Main.clgs.clear();
+        //preparedStatement = conn.prepareStatement("SELECT c.COLLEGE_ID, c.CNAME, c.MIN_PERCENTAGE, c.FEES, c.LOCATION, c.CONTACT, c.EMAIL, c.WEBSITE, l.PASSWRD FROM colleges c, students s, MARKS m, LOGIN_COLLEGES l WHERE s.STUDENT_ID = m.STUDENT_ID AND s.EMAIL =? AND m.PERCENTAGE >= c.MIN_PERCENTAGE GROUP BY c.COLLEGE_ID");
+        preparedStatement = conn.prepareStatement("SELECT c.COLLEGE_ID, c.CNAME, c.MIN_PERCENTAGE, c.FEES, c.LOCATION, c.CONTACT, c.EMAIL, c.WEBSITE  FROM colleges c, students s, MARKS m WHERE s.STUDENT_ID = m.STUDENT_ID AND s.EMAIL =? AND m.PERCENTAGE >= c.MIN_PERCENTAGE GROUP BY c.COLLEGE_ID");
+        preparedStatement.setString(1,email);
+        resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next())
+        {
+            College college = new College();
+            college.setCollege_id(resultSet.getInt("COLLEGE_ID"));
+            college.setName(resultSet.getString("CNAME"));
+            college.setPercentage(resultSet.getFloat("MIN_PERCENTAGE"));
+            college.setFees(resultSet.getInt("FEES"));
+            college.setLocation(resultSet.getString("LOCATION"));
+            college.setContact(resultSet.getString("CONTACT"));
+            college.setEmail(resultSet.getString("EMAIL"));
+            college.setWebsite(resultSet.getString("WEBSITE"));
+            College_Main.addClg(college);
+
+        }
+    }
+
 }

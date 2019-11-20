@@ -90,8 +90,9 @@ public class CollegeLoginDialog extends JDialog
             CollegeDialog collegeDialog = new CollegeDialog();
             collegeDialog.setEmail(email);
             ExecApplication.collegeEmail = email;
-            collegeDialog.setVisible(true);
             ExecApplication.collegeLoggedIn = true;
+            collegeDialog.setVisible(true);
+
             dispose();
 
 

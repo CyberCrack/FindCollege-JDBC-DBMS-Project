@@ -68,8 +68,8 @@ public class UserMarksDialog extends JDialog
                 {
                     ex.printStackTrace();
                 }
-
-
+                ExecApplication.marksEntered = true;
+                dispose();
             }
         });
     }

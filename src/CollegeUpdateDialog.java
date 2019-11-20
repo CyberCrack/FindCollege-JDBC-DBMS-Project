@@ -72,31 +72,27 @@ public class CollegeUpdateDialog extends JDialog
     private void onOK() throws SQLException
     {
         // add your code here
+        JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
         if (Float.parseFloat(textFieldPercentage.getText().trim()) >= 100)
         {
             JOptionPane.showMessageDialog(null, "Percentage cannot be 100, please enter value below 100.");
         } else if (textFieldPercentage.getText().length() != 0)
         {
-            JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-            System.out.println("In college update dialog email is :" + email);
             jdbc_sql_execute.CollegeUpdate(Float.parseFloat(textFieldPercentage.getText().trim()), email);
 
         }
 
         if (textFieldFees.getText().length() != 0)
         {
-            JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
             jdbc_sql_execute.CollegeUpdate(Integer.parseInt(textFieldFees.getText().trim()), email);
 
         }
 
         if (textFieldContact.getText().length() != 0)
         {
-            JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
             jdbc_sql_execute.CollegeUpdate(textFieldContact.getText().trim(), email);
 
         }
-        dispose();
     }
 
     private void onCancel()

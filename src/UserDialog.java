@@ -10,6 +10,7 @@ public class UserDialog extends JDialog
     private JButton buttonCancel;
     private JButton updateDetailsButton;
     private JButton deleteAccountButton;
+    private JButton findCollegeButton;
     public String email;
 
     public void setEmail(String email)
@@ -74,7 +75,7 @@ public class UserDialog extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println(email);
+
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "Warning", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION)
                 {
@@ -98,6 +99,31 @@ public class UserDialog extends JDialog
 
                 ExecApplication.userLoggedIn = false;
                 dispose();
+            }
+        });
+        findCollegeButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                JDBC_SQL_Execute jdbc_sql_execute = null;
+                try
+                {
+                    jdbc_sql_execute = new JDBC_SQL_Execute();
+                } catch (SQLException ex)
+                {
+                    ex.printStackTrace();
+                }
+                try
+                {
+                    assert jdbc_sql_execute != null;
+                    jdbc_sql_execute.GetColleges(email);
+                } catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+                FindCollegeDialog findCollegeDialog = new FindCollegeDialog();
+                findCollegeDialog.setVisible(true);
             }
         });
     }
@@ -147,7 +173,7 @@ public class UserDialog extends JDialog
         buttonCancel.setText("Cancel");
         panel2.add(buttonCancel, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         updateDetailsButton = new JButton();
         updateDetailsButton.setText("Update Details");
@@ -155,6 +181,9 @@ public class UserDialog extends JDialog
         deleteAccountButton = new JButton();
         deleteAccountButton.setText("Delete Account");
         panel3.add(deleteAccountButton, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        findCollegeButton = new JButton();
+        findCollegeButton.setText("Find College");
+        panel3.add(findCollegeButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -164,4 +193,5 @@ public class UserDialog extends JDialog
     {
         return contentPane;
     }
+
 }

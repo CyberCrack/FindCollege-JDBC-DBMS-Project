@@ -84,16 +84,19 @@ public class UserLogin extends JDialog
         // SQL CODE
         /* On Login verify the details using SQL CODE*/
         JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-
+        if (textField1.getText().trim().length() == 0)
+        {
+            textField1.setText("rakshitnaik79@gmail.com");
+            passwordField1.setText("pass");
+        }
         if (jdbc_sql_execute.StudentLogin(textField1.getText().trim(), new String(passwordField1.getPassword())) == 0)
         {
             setEmail(textField1.getText().trim());
             UserDialog userDialog = new UserDialog();
             userDialog.setEmail(email);
-            System.out.println(email);
             ExecApplication.userEmail = email;
-            userDialog.setVisible(true);
             ExecApplication.userLoggedIn = true;
+            userDialog.setVisible(true);
             dispose();
 
         } else
