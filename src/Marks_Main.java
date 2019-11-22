@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Marks_Main
 {
     static ArrayList<Marks> marks = new ArrayList<Marks>();
+
     public static void addStuds(Marks marks1) throws Exception
     {
         marks.add(marks1);

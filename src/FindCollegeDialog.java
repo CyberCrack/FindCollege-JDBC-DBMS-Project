@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class FindCollegeDialog extends JDialog
 {
+    JTextArea textArea1;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    JTextArea textArea1;
 
     public FindCollegeDialog()
     {

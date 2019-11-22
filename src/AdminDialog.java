@@ -151,4 +151,5 @@ public class AdminDialog extends JDialog
     {
         return contentPane;
     }
+
 }

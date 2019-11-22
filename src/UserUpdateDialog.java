@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.math.BigInteger;
 import java.sql.SQLException;
 
 
@@ -67,31 +66,33 @@ public class UserUpdateDialog extends JDialog
 
     private void onOK() throws SQLException
     {
-        boolean contactValid = false;
+        boolean valid = true;
         JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-        if (textFieldContact.getText().trim().length() != 10) JOptionPane.showMessageDialog(null, "Please enter a valid contact number.");
-        if (textFieldContact.getText().trim().length() == 10)
+        if (!textFieldContact.getText().isEmpty())
         {
-            try
+            if (textFieldContact.getText().trim().matches("[0-9]{10}"))
             {
-                BigInteger bigInteger = BigInteger.valueOf(Long.parseLong(textFieldContact.getText().trim()));
-                contactValid = true;
-            } catch (NumberFormatException e)
+                jdbc_sql_execute.StudentUpdate(textFieldContact.getText().trim(), ExecApplication.userEmail, 1);
+            } else
             {
                 JOptionPane.showMessageDialog(null, "Please enter a valid contact number.");
+                valid = false;
             }
         }
-        if (!textFieldEmail.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$"))
+        if (!textFieldEmail.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Please enter a valid Email address.");
-        } else jdbc_sql_execute.StudentUpdate(textFieldEmail.getText().trim(), ExecApplication.userEmail, 2);
-
-        if (contactValid)
-        {
-            jdbc_sql_execute.StudentUpdate(textFieldContact.getText().trim(), ExecApplication.userEmail, 1);
+            if (!textFieldEmail.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$"))
+            {
+                JOptionPane.showMessageDialog(null, "Please enter a valid Email address.");
+                valid = false;
+            } else jdbc_sql_execute.StudentUpdate(textFieldEmail.getText().trim(), ExecApplication.userEmail, 2);
         }
         if (textFieldLocation.getText().trim().length() != 0) jdbc_sql_execute.StudentUpdate(textFieldLocation.getText().trim(), ExecApplication.userEmail, 3);
-
+        if (valid)
+        {
+            JOptionPane.showMessageDialog(null, "Update Successful.");
+            dispose();
+        }
 
     }
 

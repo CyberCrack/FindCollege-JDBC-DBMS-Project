@@ -5,18 +5,13 @@ import java.sql.SQLException;
 
 public class UserDialog extends JDialog
 {
+    public String email;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton updateDetailsButton;
     private JButton deleteAccountButton;
     private JButton findCollegeButton;
-    public String email;
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
 
     public UserDialog()
     {
@@ -126,6 +121,11 @@ public class UserDialog extends JDialog
                 findCollegeDialog.setVisible(true);
             }
         });
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
     private void onOK()

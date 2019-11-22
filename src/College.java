@@ -15,7 +15,7 @@ public class College
     {
     }
 
-    public College(String name, float percentage, int fees, String location, String contact, String email, String website,String password)
+    public College(String name, float percentage, int fees, String location, String contact, String email, String website, String password)
     {
         this.name = name;
         this.percentage = percentage;
@@ -32,49 +32,14 @@ public class College
         this.college_id = college_id;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setPercentage(float percentage)
-    {
-        this.percentage = percentage;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public void setFees(int fees)
-    {
-        this.fees = fees;
-    }
-
-    public void setLocation(String location)
-    {
-        this.location = location;
-    }
-
-    public void setContact(String contact)
-    {
-        this.contact = contact;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public void setWebsite(String website)
-    {
-        this.website = website;
-    }
-
     public String getName()
     {
         return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     public float getPercentage()
@@ -82,9 +47,19 @@ public class College
         return percentage;
     }
 
+    public void setPercentage(float percentage)
+    {
+        this.percentage = percentage;
+    }
+
     public int getFees()
     {
         return fees;
+    }
+
+    public void setFees(int fees)
+    {
+        this.fees = fees;
     }
 
     public String getLocation()
@@ -92,9 +67,19 @@ public class College
         return location;
     }
 
+    public void setLocation(String location)
+    {
+        this.location = location;
+    }
+
     public String getContact()
     {
         return contact;
+    }
+
+    public void setContact(String contact)
+    {
+        this.contact = contact;
     }
 
     public String getPassword()
@@ -102,14 +87,29 @@ public class College
         return password;
     }
 
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
     public String getEmail()
     {
         return email;
     }
 
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
     public String getWebsite()
     {
         return website;
+    }
+
+    public void setWebsite(String website)
+    {
+        this.website = website;
     }
 
     public String getDetailsAsString()

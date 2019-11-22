@@ -12,7 +12,7 @@ public class Student
     private String location;
     private String password;
 
-    public Student(String fname, String mname, String lname, String dob, String gender, String contact, String email, String location,String password)
+    public Student(String fname, String mname, String lname, String dob, String gender, String contact, String email, String location, String password)
     {
         this.fname = fname;
         this.mname = mname;
@@ -23,26 +23,6 @@ public class Student
         this.email = email;
         this.location = location;
         this.password = password;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public String getContact()
-    {
-        return contact;
-    }
-
-    public void setContact(String contact)
-    {
-        this.contact = contact;
     }
 
     public Student(int student_id, String fname, String lname, String dob, String gender, String email)
@@ -66,6 +46,26 @@ public class Student
         this.age = age;
         this.email = email;
         this.location = location;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public String getContact()
+    {
+        return contact;
+    }
+
+    public void setContact(String contact)
+    {
+        this.contact = contact;
     }
 
     public int getStudent_id()

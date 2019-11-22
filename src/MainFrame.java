@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 public class MainFrame
 {
     public JFrame jfrmMain;
+    public JButton logoutAdminButton;
     private JPanel mainPanel;
     private JButton adminButton;
     private JButton userButton;
     private JButton creditsButton;
-    public JButton logoutAdminButton;
     private JButton logoutUserButton;
     private JButton collegeButton;
     private JButton logoutCollegeButton;
@@ -19,8 +19,6 @@ public class MainFrame
     //    {
     //        MainFrame.setLogoutAdminButtonEnabled();
     //    }
-
-
 
     public MainFrame()
     {
@@ -69,8 +67,8 @@ public class MainFrame
                     userDialog.setVisible(true);
                 } else
                 {
-//                    UserSignUpProcedureDialog  userSignUpProcedureDialog = new UserSignUpProcedureDialog();
-//                     userSignUpProcedureDialog.setVisible(true);
+                    //                    UserSignUpProcedureDialog  userSignUpProcedureDialog = new UserSignUpProcedureDialog();
+                    //                     userSignUpProcedureDialog.setVisible(true);
                     UserLogin userLogin = new UserLogin();
                     userLogin.setVisible(true);
 
@@ -79,8 +77,7 @@ public class MainFrame
                 if (ExecApplication.userLoggedIn)
                 {
                     logoutUserButton.setEnabled(true);
-                }
-                else
+                } else
                 {
                     logoutUserButton.setEnabled(false);
                 }

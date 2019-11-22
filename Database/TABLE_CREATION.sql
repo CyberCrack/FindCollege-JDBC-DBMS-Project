@@ -100,6 +100,14 @@ IF NEW.COMPUTER_BIOLOGY < 0 THEN
 SET NEW.COMPUTER_BIOLOGY = 0; END IF;
 END$$     
 DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER find_age 
+before INSERT ON students FOR EACH ROW 
+BEGIN
+set new.age = TIMESTAMPDIFF(YEAR, new.DOB, CURDATE());
+END$$     
+DELIMITER ;
 #desc marks;
 #desc login_students;
     

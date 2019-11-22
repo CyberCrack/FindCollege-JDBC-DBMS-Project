@@ -13,11 +13,6 @@ public class CollegeUpdateDialog extends JDialog
     private JTextField textFieldContact;
     private String email;
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
     public CollegeUpdateDialog()
     {
         setContentPane(contentPane);
@@ -69,44 +64,60 @@ public class CollegeUpdateDialog extends JDialog
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
     private void onOK() throws SQLException
     {
         // add your code here
         boolean valid = true;
         JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-        if (textFieldPercentage.getText().trim().matches("^[0-9]*$") && textFieldPercentage.getText().length() != 0)
+        if (!textFieldContact.getText().trim().isEmpty())
         {
-            if (Float.parseFloat(textFieldPercentage.getText().trim()) >= 100 || Float.parseFloat(textFieldPercentage.getText().trim()) <= 0)
+            if (textFieldPercentage.getText().trim().matches("^[0-9]*$") && textFieldPercentage.getText().length() != 0)
             {
-                JOptionPane.showMessageDialog(null, "Please enter value between (1,100) excluding both .");
-                valid = false;
+                if (Float.parseFloat(textFieldPercentage.getText().trim()) >= 100 || Float.parseFloat(textFieldPercentage.getText().trim()) <= 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Please enter value between (1,100) excluding both .");
+                    valid = false;
+                } else
+                {
+                    jdbc_sql_execute.CollegeUpdate(Float.parseFloat(textFieldPercentage.getText().trim()), email);
+
+                }
+            }
+        }
+        if (!textFieldFees.getText().isEmpty())
+        {
+            if (textFieldFees.getText().trim().matches("^[0-9]*$"))
+            {
+                jdbc_sql_execute.CollegeUpdate(Integer.parseInt(textFieldFees.getText().trim()), email);
+
             } else
             {
-                jdbc_sql_execute.CollegeUpdate(Float.parseFloat(textFieldPercentage.getText().trim()), email);
-
+                JOptionPane.showMessageDialog(null, "Enter valid fees.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                valid = false;
             }
         }
 
-        if (textFieldFees.getText().length() != 0 && textFieldFees.getText().trim().matches("^[0-9]*$"))
+        if (!textFieldContact.getText().isEmpty())
         {
-            jdbc_sql_execute.CollegeUpdate(Integer.parseInt(textFieldFees.getText().trim()), email);
-
-        } else
-        {
-            JOptionPane.showMessageDialog(null, "Enter valid fees.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            valid = false;
+            if (!textFieldContact.getText().isEmpty() || (textFieldContact.getText().matches("[0-9]{10}")))
+            {
+                jdbc_sql_execute.CollegeUpdate(textFieldContact.getText().trim(), email);
+            } else
+            {
+                JOptionPane.showMessageDialog(null, "Enter valid contact number.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                valid = false;
+            }
         }
-
-
-        if (!textFieldContact.getText().isEmpty() || (textFieldContact.getText().matches("[0-9]{10}")))
+        if (valid)
         {
-            jdbc_sql_execute.CollegeUpdate(textFieldContact.getText().trim(), email);
-        } else
-        {
-            JOptionPane.showMessageDialog(null, "Enter valid contact number.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            valid = false;
+            JOptionPane.showMessageDialog(null, "Updated Sucessfully.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
         }
-        if (valid) JOptionPane.showMessageDialog(null, "Updated Sucessfully.", "Information", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void onCancel()

@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.SQLException;
 import java.time.Month;
 import java.time.Year;
-import java.util.Arrays;
 
 public class UserSignUp extends JDialog
 {
@@ -116,7 +114,7 @@ public class UserSignUp extends JDialog
 
         if (inputok)
         {
-            Student student = new Student(fnameTextField.getText().trim(), mnameTextField.getText().trim(), lnameTextField.getText().trim(), yearComboBox.getSelectedItem().toString() + "-" + Integer.toString(MonthComboBox.getSelectedIndex() + 1) + "-" + dateComboBox.getSelectedItem().toString(), gender, contactTextField.getText().trim(), emailTextField.getText().trim(), locationComboBox.getSelectedItem().toString(), new String(passwordPasswordField.getPassword()));
+            Student student = new Student(fnameTextField.getText().trim(), mnameTextField.getText().trim(), lnameTextField.getText().trim(), yearComboBox.getSelectedItem().toString() + "-" + (MonthComboBox.getSelectedIndex() + 1) + "-" + dateComboBox.getSelectedItem().toString(), gender, contactTextField.getText().trim(), emailTextField.getText().trim(), locationComboBox.getSelectedItem().toString(), new String(passwordPasswordField.getPassword()));
             JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
             jdbc_sql_execute.InsertValues(student);
             JOptionPane.showMessageDialog(null, "Student registered successfully.");

@@ -81,7 +81,6 @@ public class Marks
     }
 
 
-
     public int getComputerBiology()
     {
         return computerBiology;

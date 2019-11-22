@@ -13,11 +13,6 @@ public class CollegeLoginDialog extends JDialog
     private JButton signUpButton;
     private String email;
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
     public CollegeLoginDialog()
     {
         setContentPane(contentPane);
@@ -76,6 +71,11 @@ public class CollegeLoginDialog extends JDialog
                 addCollegeDialog.setVisible(true);
             }
         });
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
     private void onOK() throws SQLException

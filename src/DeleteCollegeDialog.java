@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class DeleteCollegeDialog extends JDialog
 {
+    public JComboBox comboBoxCollege;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    public JComboBox comboBoxCollege;
     private JDBC_SQL_Execute jdbc_sql_execute;
     private ArrayList<College> tempList;// To add items in the comboBox inorder to delete them.
 
@@ -99,16 +99,16 @@ public class DeleteCollegeDialog extends JDialog
 
     private void delClgsfromComboBox(String nameToDel) throws SQLException
     {
-            jdbc_sql_execute.DeleteCollege(nameToDel);
-//        ArrayList<College> updList = new ArrayList<College>();
-//        tempList = College_Main.getClgs();
-//        for (College clg : tempList)
-//        {
-//            if (clg.getName() != nameToDel) updList.add(clg);
-//
-//        }
-//        //comboBoxCollege.setSelectedIndex(0);
-//        College_Main.setClgs(updList);
+        jdbc_sql_execute.DeleteCollege(nameToDel);
+        //        ArrayList<College> updList = new ArrayList<College>();
+        //        tempList = College_Main.getClgs();
+        //        for (College clg : tempList)
+        //        {
+        //            if (clg.getName() != nameToDel) updList.add(clg);
+        //
+        //        }
+        //        //comboBoxCollege.setSelectedIndex(0);
+        //        College_Main.setClgs(updList);
         addClgToComboBox();
     }
 

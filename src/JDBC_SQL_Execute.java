@@ -191,7 +191,8 @@ public class JDBC_SQL_Execute
         stmt.executeUpdate();
         Student_Main.studs.clear();
     }
-    public void StudentLoginUpdate(String newEmail,String email) throws SQLException
+
+    public void StudentLoginUpdate(String newEmail, String email) throws SQLException
     {
         PreparedStatement stmt = null;
         stmt = conn.prepareStatement("update LOGIN_STUDENTS set EMAIL=? where EMAIL=?");
@@ -199,30 +200,30 @@ public class JDBC_SQL_Execute
         stmt.setString(2, email);
         stmt.executeUpdate();
     }
-    public void StudentUpdate(String newValue,String email,int type) throws SQLException
+
+    public void StudentUpdate(String newValue, String email, int type) throws SQLException
     {
         PreparedStatement stmt = null;
-        if(type==1)
-            stmt = conn.prepareStatement("update students set CONTACT=? where EMAIL=?");
-        else if(type==2)
+        if (type == 1) stmt = conn.prepareStatement("update students set CONTACT=? where EMAIL=?");
+        else if (type == 2)
         {
             stmt = conn.prepareStatement("update students set EMAIL=? where EMAIL=?");
-            StudentLoginUpdate(newValue,email);
-        }
-        else if(type==3)
-            stmt = conn.prepareStatement("update students set LOCATION=? where EMAIL=?");
+            StudentLoginUpdate(newValue, email);
+        } else if (type == 3) stmt = conn.prepareStatement("update students set LOCATION=? where EMAIL=?");
 
         assert stmt != null;
         stmt.setString(1, newValue);
         stmt.setString(2, email);
         stmt.executeUpdate();
     }
+
     public void CallStoredProcedure() throws SQLException
     {
         CallableStatement callableStatement;
         callableStatement = conn.prepareCall("{call GetAvgPer()}");
         callableStatement.executeUpdate();
     }
+
     public void GetColleges(String email) throws Exception
     {
         CallStoredProcedure();
@@ -231,7 +232,7 @@ public class JDBC_SQL_Execute
         College_Main.clgs.clear();
         //preparedStatement = conn.prepareStatement("SELECT c.COLLEGE_ID, c.CNAME, c.MIN_PERCENTAGE, c.FEES, c.LOCATION, c.CONTACT, c.EMAIL, c.WEBSITE, l.PASSWRD FROM colleges c, students s, MARKS m, LOGIN_COLLEGES l WHERE s.STUDENT_ID = m.STUDENT_ID AND s.EMAIL =? AND m.PERCENTAGE >= c.MIN_PERCENTAGE GROUP BY c.COLLEGE_ID");
         preparedStatement = conn.prepareStatement("SELECT c.COLLEGE_ID, c.CNAME, c.MIN_PERCENTAGE, c.FEES, c.LOCATION, c.CONTACT, c.EMAIL, c.WEBSITE  FROM colleges c, students s, MARKS m WHERE s.STUDENT_ID = m.STUDENT_ID AND s.EMAIL =? AND m.PERCENTAGE >= c.MIN_PERCENTAGE GROUP BY c.COLLEGE_ID");
-        preparedStatement.setString(1,email);
+        preparedStatement.setString(1, email);
         resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next())

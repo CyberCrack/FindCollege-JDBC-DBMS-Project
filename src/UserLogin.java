@@ -13,11 +13,6 @@ public class UserLogin extends JDialog
     private JButton newUserButton;
     private String email;
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
 
     public UserLogin()
     {
@@ -78,13 +73,18 @@ public class UserLogin extends JDialog
         });
     }
 
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
     private void onOK() throws SQLException
     {
         // add your code here
         // SQL CODE
         /* On Login verify the details using SQL CODE*/
         JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-        if (textField1.getText().trim().length() == 0)
+        if (textField1.getText().trim().isEmpty())
         {
             textField1.setText("rakshitnaik79@gmail.com");
             passwordField1.setText("pass");

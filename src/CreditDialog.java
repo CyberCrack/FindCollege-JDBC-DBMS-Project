@@ -116,4 +116,5 @@ public class CreditDialog extends JDialog
     {
         return contentPane;
     }
+
 }

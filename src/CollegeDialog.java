@@ -5,17 +5,12 @@ import java.sql.SQLException;
 
 public class CollegeDialog extends JDialog
 {
+    public String email;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton updateDetailsButton;
     private JButton deleteCollegeButton;
-    public String email;
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
 
     public CollegeDialog()
     {
@@ -102,6 +97,11 @@ public class CollegeDialog extends JDialog
                 dispose();
             }
         });
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
     private void onOK()

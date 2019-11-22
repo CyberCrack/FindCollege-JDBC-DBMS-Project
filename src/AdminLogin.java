@@ -13,16 +13,6 @@ public class AdminLogin extends JDialog
     private JTextField textField1;
     private JButton autoLoginButton;
 
-    private void setEmail(String email)
-    {
-        AdminLogin.email = email;
-    }
-
-    private void setPassword(String password)
-    {
-        AdminLogin.password = password;
-    }
-
     public AdminLogin()
     {
 
@@ -84,6 +74,16 @@ public class AdminLogin extends JDialog
         setPassword(password);
         System.out.println("Admin Email: " + AdminLogin.email);
         System.out.println("Admin Password: " + AdminLogin.password);
+    }
+
+    private void setEmail(String email)
+    {
+        AdminLogin.email = email;
+    }
+
+    private void setPassword(String password)
+    {
+        AdminLogin.password = password;
     }
 
     private void onOK()

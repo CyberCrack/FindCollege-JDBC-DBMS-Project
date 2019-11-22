@@ -112,4 +112,5 @@ public class ViewCollegesDialog extends JDialog
     {
         return contentPane;
     }
+
 }

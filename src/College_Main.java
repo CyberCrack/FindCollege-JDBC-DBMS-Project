@@ -5,8 +5,6 @@ public class College_Main
     static ArrayList<College> clgs = new ArrayList<College>();
 
 
-
-
     public static void addClg(College clg) throws Exception
     {
         clgs.add(clg);
