@@ -6,5 +6,5 @@ INSERT INTO LOGIN_COLLEGES(EMAIL,PASSWRD) VALUES("ramaiah@ramaiah.edu","password
 INSERT INTO LOGIN_COLLEGES(EMAIL,PASSWRD) VALUES("bms@bms.edu","password");
 INSERT INTO LOGIN_COLLEGES(EMAIL,PASSWRD) VALUES("rns@rns.edu","password");
 INSERT INTO LOGIN_COLLEGES(EMAIL,PASSWRD) VALUES("bangalore@bangalore.edu","password");
-SELECT * from LOGIN_COLLEGES;
+#SELECT * from LOGIN_COLLEGES;
 #'atria@atria.edu'

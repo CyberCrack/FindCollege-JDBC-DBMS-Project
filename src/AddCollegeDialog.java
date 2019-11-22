@@ -12,7 +12,7 @@ public class AddCollegeDialog extends JDialog
     private JTextField textFieldName;
     private JTextField textFieldPercentage;
     private JTextField textFieldFees;
-    private JComboBox comboBoxLocation;
+    private JComboBox<String> comboBoxLocation;
     private JTextField textFieldContact;
     private JTextField textFieldEmail;
     private JTextField textFieldWebsite;

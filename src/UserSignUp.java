@@ -23,13 +23,12 @@ public class UserSignUp extends JDialog
     private JComboBox yearComboBox;
     private JComboBox MonthComboBox;
     private JPasswordField passwordPasswordField;
-    private ButtonGroup group;
     private boolean inputok;
 
     public UserSignUp()
     {
         inputok = true;
-        group = new ButtonGroup();
+        ButtonGroup group = new ButtonGroup();
         group.add(maleRadioButton);
         group.add(femaleRadioButton);
         setContentPane(contentPane);
