@@ -4,10 +4,9 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
-public class MainFrame
+class MainFrame
 {
     JFrame jfrmMain;
     public JButton logoutAdminButton;
@@ -31,114 +30,91 @@ public class MainFrame
         jfrmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfrmMain.setLocationRelativeTo(null);
 
-        adminButton.addActionListener(new ActionListener()
+        adminButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (ExecApplication.userLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off User Account first, before signing into Admin Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (ExecApplication.collegeLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off College Account first, before signing into Admin Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+
+            else if (ExecApplication.adminLoggedIn)
             {
-                if (ExecApplication.userLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off User Account first, before signing into Admin Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
-                else if (ExecApplication.collegeLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off College Account first, before signing into Admin Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+                AdminDialog admDig = new AdminDialog();
+                admDig.setVisible(true);
+            } else
+            {
+                AdminLogin admLgn = new AdminLogin();
+                admLgn.setVisible(true);
 
-                else if (ExecApplication.adminLoggedIn)
+                if (ExecApplication.adminLoggedIn) logoutAdminButton.setEnabled(true);
+            }
+        });
+        userButton.addActionListener(e ->
+        {
+            if (ExecApplication.adminLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off Admin Account first, before signing into Student Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (ExecApplication.collegeLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off College Account first, before signing into Student Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (ExecApplication.userLoggedIn)
+            {
+                UserDialog userDialog = null;
+                try
                 {
-                    AdminDialog admDig = new AdminDialog();
-                    admDig.setVisible(true);
-                } else
+                    userDialog = new UserDialog();
+                } catch (SQLException ex)
                 {
-                    AdminLogin admLgn = new AdminLogin();
-                    admLgn.setVisible(true);
-
-                    if (ExecApplication.adminLoggedIn) logoutAdminButton.setEnabled(true);
+                    ex.printStackTrace();
                 }
-            }
-        });
-        userButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+                assert userDialog != null;
+                userDialog.setVisible(true);
+            } else
             {
-                if (ExecApplication.adminLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off Admin Account first, before signing into Student Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
-                else if (ExecApplication.collegeLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off College Account first, before signing into Student Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
-                else if (ExecApplication.userLoggedIn)
-                {
-                    UserDialog userDialog = new UserDialog();
-                    userDialog.setVisible(true);
-                } else
-                {
-                    UserLogin userLogin = new UserLogin();
-                    userLogin.setVisible(true);
+                UserLogin userLogin = new UserLogin();
+                userLogin.setVisible(true);
 
-                }
+            }
 
-                if (ExecApplication.userLoggedIn)
-                {
-                    logoutUserButton.setEnabled(true);
-                } else
-                {
-                    logoutUserButton.setEnabled(false);
-                }
-            }
-        });
-        collegeButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (ExecApplication.userLoggedIn)
             {
-                if (ExecApplication.adminLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off Admin Account first, before signing into College Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
-                else if (ExecApplication.userLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off Student Account first, before signing into College Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
-                else if (ExecApplication.collegeLoggedIn)
-                {
-                    CollegeDialog collegeDialog = new CollegeDialog();
-                    collegeDialog.setEmail(ExecApplication.collegeEmail);
-                    collegeDialog.setVisible(true);
-
-                } else
-                {
-                    CollegeLoginDialog collegeLoginDialog = new CollegeLoginDialog();
-                    collegeLoginDialog.setVisible(true);
-
-                }
-                if (!ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(false);
-                if (ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(true);
-            }
-        });
-        creditsButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
+                logoutUserButton.setEnabled(true);
+            } else
             {
-                //                CreditDialog crd = new CreditDialog();
-                //                crd.setVisible(true);
-                CreditsDialog creditsDialog = new CreditsDialog();
-                creditsDialog.setVisible(true);
-            }
-        });
-        logoutAdminButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                ExecApplication.adminLoggedIn = false;
-                logoutAdminButton.setEnabled(false);
-            }
-        });
-        logoutUserButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                ExecApplication.userLoggedIn = false;
                 logoutUserButton.setEnabled(false);
             }
         });
-        logoutCollegeButton.addActionListener(new ActionListener()
+        collegeButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (ExecApplication.adminLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off Admin Account first, before signing into College Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (ExecApplication.userLoggedIn) JOptionPane.showMessageDialog(null, "Please Log off Student Account first, before signing into College Account.", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (ExecApplication.collegeLoggedIn)
             {
-                ExecApplication.collegeLoggedIn = false;
-                logoutCollegeButton.setEnabled(false);
+                CollegeDialog collegeDialog = new CollegeDialog();
+                collegeDialog.setVisible(true);
+
+            } else
+            {
+                CollegeLoginDialog collegeLoginDialog = new CollegeLoginDialog();
+                collegeLoginDialog.setVisible(true);
+
             }
+            if (!ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(false);
+            if (ExecApplication.collegeLoggedIn) logoutCollegeButton.setEnabled(true);
+        });
+        creditsButton.addActionListener(e ->
+        {
+            CreditsDialog creditsDialog = new CreditsDialog();
+            creditsDialog.setVisible(true);
+        });
+        logoutAdminButton.addActionListener(e ->
+        {
+            ExecApplication.adminLoggedIn = false;
+            logoutAdminButton.setEnabled(false);
+        });
+        logoutUserButton.addActionListener(e ->
+        {
+            ExecApplication.userLoggedIn = false;
+            logoutUserButton.setEnabled(false);
+        });
+        logoutCollegeButton.addActionListener(e ->
+        {
+            ExecApplication.collegeLoggedIn = false;
+            logoutCollegeButton.setEnabled(false);
         });
 
     }
@@ -225,5 +201,6 @@ public class MainFrame
     {
         return mainPanel;
     }
+
 
 }

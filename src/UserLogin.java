@@ -4,10 +4,12 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class UserLogin extends JDialog
+class UserLogin extends JDialog
 {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -15,7 +17,6 @@ public class UserLogin extends JDialog
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JButton newUserButton;
-    private String email;
 
 
     public UserLogin()
@@ -23,30 +24,21 @@ public class UserLogin extends JDialog
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setTitle("User Login");
+        setTitle("Student Login");
         setSize(500, 400);
         setLocationRelativeTo(null);
-        buttonOK.addActionListener(new ActionListener()
+        buttonOK.addActionListener(e ->
         {
-            public void actionPerformed(ActionEvent e)
+            try
             {
-                try
-                {
-                    onOK();
-                } catch (SQLException ex)
-                {
-                    ex.printStackTrace();
-                }
+                onOK();
+            } catch (SQLException ex)
+            {
+                ex.printStackTrace();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -59,27 +51,12 @@ public class UserLogin extends JDialog
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener()
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        newUserButton.addActionListener(e ->
         {
-            public void actionPerformed(ActionEvent e)
-            {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        newUserButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                UserSignUpProcedureDialog userSignUpProcedureDialog = new UserSignUpProcedureDialog();
-                userSignUpProcedureDialog.setVisible(true);
-            }
+            UserSignUpProcedureDialog userSignUpProcedureDialog = new UserSignUpProcedureDialog();
+            userSignUpProcedureDialog.setVisible(true);
         });
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
     }
 
     private void onOK() throws SQLException
@@ -90,13 +67,12 @@ public class UserLogin extends JDialog
             textField1.setText("rakshitnaik79@gmail.com");
             passwordField1.setText("pass");
 
+
         }
         if (jdbc_sql_execute.StudentLogin(textField1.getText().trim(), new String(passwordField1.getPassword())) == 0)
         {
-            setEmail(textField1.getText().trim());
+            ExecApplication.userEmail = textField1.getText().trim();
             UserDialog userDialog = new UserDialog();
-            userDialog.setEmail(email);
-            ExecApplication.userEmail = email;
             ExecApplication.userLoggedIn = true;
             userDialog.setVisible(true);
             dispose();

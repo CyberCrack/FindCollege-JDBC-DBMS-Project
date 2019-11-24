@@ -4,12 +4,13 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class CollegeDialog extends JDialog
+class CollegeDialog extends JDialog
 {
-    public String email;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -24,21 +25,9 @@ public class CollegeDialog extends JDialog
         setSize(500, 400);
         setTitle("College Dialog");
         setLocationRelativeTo(null);
-        buttonOK.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -51,62 +40,41 @@ public class CollegeDialog extends JDialog
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener()
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        updateDetailsButton.addActionListener(e ->
         {
-            public void actionPerformed(ActionEvent e)
-            {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        updateDetailsButton.addActionListener(new ActionListener()
-        {
-
-
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                CollegeUpdateDialog collegeUpdateDialog = new CollegeUpdateDialog();
-                collegeUpdateDialog.setEmail(email);
-                collegeUpdateDialog.setVisible(true);
-            }
+            CollegeUpdateDialog collegeUpdateDialog = new CollegeUpdateDialog();
+            collegeUpdateDialog.setVisible(true);
         });
 
-        deleteCollegeButton.addActionListener(new ActionListener()
+        deleteCollegeButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            ExecApplication.collegeLoggedIn = true;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the college account?", "Warning", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION)
             {
-                ExecApplication.collegeLoggedIn = true;
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the college account?", "Warning", JOptionPane.YES_NO_OPTION);
-                if (dialogResult == JOptionPane.YES_OPTION)
+                JDBC_SQL_Execute jdbc_sql_execute = null;
+                try
                 {
-                    JDBC_SQL_Execute jdbc_sql_execute = null;
-                    try
-                    {
-                        jdbc_sql_execute = new JDBC_SQL_Execute();
-                    } catch (SQLException ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                    try
-                    {
-                        assert jdbc_sql_execute != null;
-                        jdbc_sql_execute.DeleteCollege(ExecApplication.collegeEmail);
-                        ExecApplication.collegeLoggedIn = false;
-                        dispose();
-                    } catch (SQLException ex)
-                    {
-                        ex.printStackTrace();
-                    }
+                    jdbc_sql_execute = new JDBC_SQL_Execute();
+                } catch (SQLException ex)
+                {
+                    ex.printStackTrace();
+                }
+                try
+                {
+                    assert jdbc_sql_execute != null;
+                    jdbc_sql_execute.DeleteCollege(ExecApplication.collegeEmail);
+                    ExecApplication.collegeLoggedIn = false;
+                    dispose();
+                } catch (SQLException ex)
+                {
+                    ex.printStackTrace();
                 }
             }
         });
     }
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
 
     private void onOK()
     {

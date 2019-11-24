@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class JDBC_SQL_Execute
+class JDBC_SQL_Execute
 {
     private Connection conn;
 
@@ -243,6 +243,18 @@ public class JDBC_SQL_Execute
             College_Main.addClg(college);
 
         }
+    }
+
+    String getStudentName(String email) throws SQLException
+    {
+        System.out.println(email);
+        ResultSet resultSet;
+        PreparedStatement preparedStatement;
+        preparedStatement = conn.prepareStatement("SELECT Fname from students where email=?");
+        preparedStatement.setString(1, email);
+        resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getString("FNAME");
     }
 
 }

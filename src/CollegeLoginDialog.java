@@ -4,10 +4,12 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class CollegeLoginDialog extends JDialog
+class CollegeLoginDialog extends JDialog
 {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -15,7 +17,6 @@ public class CollegeLoginDialog extends JDialog
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JButton signUpButton;
-    private String email;
 
     public CollegeLoginDialog()
     {
@@ -26,27 +27,18 @@ public class CollegeLoginDialog extends JDialog
         setTitle("College Login");
         setLocationRelativeTo(null);
 
-        buttonOK.addActionListener(new ActionListener()
+        buttonOK.addActionListener(e ->
         {
-            public void actionPerformed(ActionEvent e)
+            try
             {
-                try
-                {
-                    onOK();
-                } catch (SQLException ex)
-                {
-                    ex.printStackTrace();
-                }
+                onOK();
+            } catch (SQLException ex)
+            {
+                ex.printStackTrace();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -59,28 +51,15 @@ public class CollegeLoginDialog extends JDialog
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener()
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        signUpButton.addActionListener(e ->
         {
-            public void actionPerformed(ActionEvent e)
-            {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        signUpButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                AddCollegeDialog addCollegeDialog = new AddCollegeDialog();
-                addCollegeDialog.setVisible(true);
-            }
+            AddCollegeDialog addCollegeDialog = new AddCollegeDialog();
+            addCollegeDialog.setVisible(true);
         });
     }
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
+
 
     private void onOK() throws SQLException
     {
@@ -95,15 +74,11 @@ public class CollegeLoginDialog extends JDialog
         }
         if (jdbc_sql_execute.CollegeLogin(textField1.getText().trim(), new String(passwordField1.getPassword())) == 0)
         {
-            setEmail(textField1.getText().trim());
-            CollegeDialog collegeDialog = new CollegeDialog();
-            collegeDialog.setEmail(email);
-            ExecApplication.collegeEmail = email;
+            ExecApplication.collegeEmail = textField1.getText().trim();
             ExecApplication.collegeLoggedIn = true;
+            CollegeDialog collegeDialog = new CollegeDialog();
             collegeDialog.setVisible(true);
             dispose();
-
-
         } else
         {
             JOptionPane.showMessageDialog(null, "College not found, please singup first.");
@@ -150,7 +125,7 @@ public class CollegeLoginDialog extends JDialog
         buttonCancel.setText("Cancel");
         panel2.add(buttonCancel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel3, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Email");
@@ -165,10 +140,12 @@ public class CollegeLoginDialog extends JDialog
         final Spacer spacer2 = new Spacer();
         panel3.add(spacer2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        panel3.add(spacer3, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel3.add(spacer3, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         signUpButton = new JButton();
         signUpButton.setText("SignUp");
-        panel3.add(signUpButton, new GridConstraints(3, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(signUpButton, new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer4 = new Spacer();
+        panel3.add(spacer4, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
 
     /**

@@ -1,4 +1,4 @@
-public class ExecApplication
+class ExecApplication
 {
     public static boolean adminLoggedIn;
     public static boolean collegeLoggedIn;
@@ -16,8 +16,7 @@ public class ExecApplication
         userLoggedIn = false;
         userSignedUp = false;
         marksEntered = false;
-        AdminLogin adminLogin = new AdminLogin("mayank@gmail.com", "password");
-        //clg.setVisible(true);
+        new AdminLogin("mayank@gmail.com", "password");
         clg.jfrmMain.setVisible(true);
     }
 }

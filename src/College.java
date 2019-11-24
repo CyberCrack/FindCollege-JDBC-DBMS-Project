@@ -1,4 +1,4 @@
-public class College
+class College
 {
     private int college_id;
     private String name;

@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class Marks_Main
+class Marks_Main
 {
-    static ArrayList<Marks> marks = new ArrayList<Marks>();
+    private static ArrayList<Marks> marks = new ArrayList<>();
 
-    public static void addStuds(Marks marks1) throws Exception
+    public static void addStuds(Marks marks1)
     {
         marks.add(marks1);
     }

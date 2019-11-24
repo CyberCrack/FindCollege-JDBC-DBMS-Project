@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class Student_Main
+class Student_Main
 {
-    static ArrayList<Student> studs = new ArrayList<Student>();
+    static ArrayList<Student> studs = new ArrayList<>();
 
-    public static void addStuds(Student stud) throws Exception
+    public static void addStuds(Student stud)
     {
         studs.add(stud);
     }

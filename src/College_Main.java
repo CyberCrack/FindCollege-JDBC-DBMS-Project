@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-public class College_Main
+class College_Main
 {
-    static ArrayList<College> clgs = new ArrayList<College>();
+    static ArrayList<College> clgs = new ArrayList<>();
 
 
-    public static void addClg(College clg) throws Exception
+    public static void addClg(College clg)
     {
         clgs.add(clg);
     }

@@ -1,4 +1,4 @@
-public class Marks
+class Marks
 {
     private int student_id;
     private int english;

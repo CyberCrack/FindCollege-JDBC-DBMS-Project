@@ -26,7 +26,7 @@
           <text value="Enter the marks for each subject"/>
         </properties>
       </component>
-	   <component id="37dcb" class="javax.swing.JLabel">
+      <component id="37dcb" class="javax.swing.JLabel">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -54,7 +54,7 @@
           <text value="Hindi/Kannda"/>
         </properties>
       </component>
-      <component id="4073e" class="javax.swing.JTextField" binding="textFieldHindiKannda" custom-create="true">
+      <component id="4073e" class="javax.swing.JTextField" binding="textFieldHindiKannda">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -62,7 +62,6 @@
         </constraints>
         <properties/>
       </component>
-     
       <component id="43c76" class="javax.swing.JLabel">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
