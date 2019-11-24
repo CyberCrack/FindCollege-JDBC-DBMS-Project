@@ -91,15 +91,6 @@ class DeleteCollegeDialog extends JDialog
     private void delClgsfromComboBox(String nameToDel) throws SQLException
     {
         jdbc_sql_execute.DeleteCollege(nameToDel);
-        //        ArrayList<College> updList = new ArrayList<College>();
-        //        tempList = College_Main.getClgs();
-        //        for (College clg : tempList)
-        //        {
-        //            if (clg.getName() != nameToDel) updList.add(clg);
-        //
-        //        }
-        //        //comboBoxCollege.setSelectedIndex(0);
-        //        College_Main.setClgs(updList);
         addClgToComboBox();
     }
 
