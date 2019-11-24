@@ -72,7 +72,7 @@ public class UserDialog extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                ExecApplication.userLoggedIn = true;
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "Warning", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION)
                 {
@@ -87,15 +87,15 @@ public class UserDialog extends JDialog
                     try
                     {
                         assert jdbc_sql_execute != null;
-                        jdbc_sql_execute.DeleteStudent(email);
+                        jdbc_sql_execute.DeleteStudent(ExecApplication.userEmail);
+                        ExecApplication.userLoggedIn = false;
+                        dispose();
                     } catch (SQLException ex)
                     {
                         ex.printStackTrace();
                     }
                 }
 
-                ExecApplication.userLoggedIn = false;
-                dispose();
             }
         });
         findCollegeButton.addActionListener(new ActionListener()
@@ -114,7 +114,7 @@ public class UserDialog extends JDialog
                 try
                 {
                     assert jdbc_sql_execute != null;
-                    jdbc_sql_execute.GetColleges(email);
+                    jdbc_sql_execute.GetColleges(ExecApplication.userEmail);
                 } catch (Exception ex)
                 {
                     ex.printStackTrace();
