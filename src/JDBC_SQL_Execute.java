@@ -9,14 +9,14 @@ public class JDBC_SQL_Execute
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/find_college_db", "Mayank", "apple");
     }
 
-    public int InsertValues(College clg) throws Exception
+    int InsertValues(College clg) throws Exception
     {
         ViewAllColleges();
         for (College college : College_Main.clgs)
         {
             if (college.getName().equals(clg.getName())) return 1;
         }
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("insert into Colleges(CNAME,MIN_PERCENTAGE,FEES,LOCATION,CONTACT,EMAIL,WEBSITE) values(?,?,?,?,?,?,?)");
         stmt.setString(1, clg.getName());
         stmt.setFloat(2, clg.getPercentage());
@@ -35,10 +35,10 @@ public class JDBC_SQL_Execute
     }
 
 
-    public int InsertValues(Student student) throws Exception
+    void InsertValues(Student student) throws Exception
     {
 
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("insert into students(FNAME , MNAME, LNAME ,DOB ,GENDER ,CONTACT,EMAIL,LOCATION ) values(?,?,?,?,?,?,?,?)");
         stmt.setString(1, student.getFname());
         stmt.setString(2, student.getMname());
@@ -54,13 +54,12 @@ public class JDBC_SQL_Execute
         stmt.setString(1, student.getEmail());
         stmt.setString(2, student.getPassword());
         stmt.executeUpdate();
-        return 0;
     }
 
-    public int InsertValues(Marks marks) throws Exception
+    void InsertValues(Marks marks) throws Exception
     {
 
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("INSERT INTO MARKS(ENGLISH,HINDI_KANNADA,MATHS,PHYSICS,CHEMISTRY,COMPUTER_BIOLOGY) VALUES(?,?,?,?,?,?);");
         stmt.setInt(1, marks.getEnglish());
         stmt.setInt(2, marks.getHindiKannada());
@@ -70,13 +69,12 @@ public class JDBC_SQL_Execute
         stmt.setInt(6, marks.getComputerBiology());
         stmt.executeUpdate();
         CallStoredProcedure();
-        return 0;
     }
 
 
-    public void ViewAllColleges() throws Exception
+    void ViewAllColleges() throws Exception
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("select * from colleges");
         ResultSet rs = stmt.executeQuery();
         College_Main.clgs.clear();
@@ -96,9 +94,9 @@ public class JDBC_SQL_Execute
         }
     }
 
-    public void DeleteCollege(String nameOrEmail) throws SQLException
+    void DeleteCollege(String nameOrEmail) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         if (!nameOrEmail.contains("@")) stmt = conn.prepareStatement("delete from colleges where cname=?");
         else stmt = conn.prepareStatement("delete from colleges where EMAIL=?");
         stmt.setString(1, nameOrEmail);
@@ -106,9 +104,9 @@ public class JDBC_SQL_Execute
         College_Main.clgs.clear();
     }
 
-    public int CollegeLogin(String email, String password) throws SQLException
+    int CollegeLogin(String email, String password) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("select COLLEGE_ID from LOGIN_COLLEGES where EMAIL=? and PASSWRD=?");
         stmt.setString(1, email);
         stmt.setString(2, password);
@@ -125,39 +123,36 @@ public class JDBC_SQL_Execute
         return 0;
     }
 
-    public int CollegeUpdate(float percentage, String email) throws SQLException
+    void CollegeUpdate(float percentage, String email) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("update colleges set MIN_PERCENTAGE=? where EMAIL=?");
         stmt.setFloat(1, percentage);
         stmt.setString(2, email);
         stmt.executeUpdate();
-        return 0;
     }
 
-    public int CollegeUpdate(int fees, String email) throws SQLException
+    void CollegeUpdate(int fees, String email) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("update colleges set FEES=? where EMAIL=?");
         stmt.setInt(1, fees);
         stmt.setString(2, email);
         stmt.executeUpdate();
-        return 0;
     }
 
-    public int CollegeUpdate(String contact, String email) throws SQLException
+    void CollegeUpdate(String contact, String email) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("update colleges set CONTACT=? where EMAIL=?");
         stmt.setString(1, contact);
         stmt.setString(2, email);
         stmt.executeUpdate();
-        return 0;
     }
 
-    public int StudentLogin(String email, String password) throws SQLException
+    int StudentLogin(String email, String password) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("select STUDENT_ID from LOGIN_STUDENTS where EMAIL=? and PASSWRD=?");
         stmt.setString(1, email);
         stmt.setString(2, password);
@@ -174,9 +169,9 @@ public class JDBC_SQL_Execute
         return 0;
     }
 
-    public void DeleteStudent(String idOrEmail) throws SQLException
+    void DeleteStudent(String idOrEmail) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         if (!idOrEmail.contains("@"))
         {
             int id = Integer.parseInt(idOrEmail);
@@ -192,16 +187,16 @@ public class JDBC_SQL_Execute
         Student_Main.studs.clear();
     }
 
-    public void StudentLoginUpdate(String newEmail, String email) throws SQLException
+    private void StudentLoginUpdate(String newEmail, String email) throws SQLException
     {
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
         stmt = conn.prepareStatement("update LOGIN_STUDENTS set EMAIL=? where EMAIL=?");
         stmt.setString(1, newEmail);
         stmt.setString(2, email);
         stmt.executeUpdate();
     }
 
-    public void StudentUpdate(String newValue, String email, int type) throws SQLException
+    void StudentUpdate(String newValue, String email, int type) throws SQLException
     {
         PreparedStatement stmt = null;
         if (type == 1) stmt = conn.prepareStatement("update students set CONTACT=? where EMAIL=?");
@@ -217,20 +212,19 @@ public class JDBC_SQL_Execute
         stmt.executeUpdate();
     }
 
-    public void CallStoredProcedure() throws SQLException
+    private void CallStoredProcedure() throws SQLException
     {
         CallableStatement callableStatement;
         callableStatement = conn.prepareCall("{call GetAvgPer()}");
         callableStatement.executeUpdate();
     }
 
-    public void GetColleges(String email) throws Exception
+    void GetColleges(String email) throws Exception
     {
         CallStoredProcedure();
         ResultSet resultSet;
         PreparedStatement preparedStatement;
         College_Main.clgs.clear();
-        //preparedStatement = conn.prepareStatement("SELECT c.COLLEGE_ID, c.CNAME, c.MIN_PERCENTAGE, c.FEES, c.LOCATION, c.CONTACT, c.EMAIL, c.WEBSITE, l.PASSWRD FROM colleges c, students s, MARKS m, LOGIN_COLLEGES l WHERE s.STUDENT_ID = m.STUDENT_ID AND s.EMAIL =? AND m.PERCENTAGE >= c.MIN_PERCENTAGE GROUP BY c.COLLEGE_ID");
         preparedStatement = conn.prepareStatement("SELECT c.COLLEGE_ID, c.CNAME, c.MIN_PERCENTAGE, c.FEES, c.LOCATION, c.CONTACT, c.EMAIL, c.WEBSITE  FROM colleges c, students s, MARKS m WHERE s.STUDENT_ID = m.STUDENT_ID AND s.EMAIL =? AND m.PERCENTAGE >= c.MIN_PERCENTAGE GROUP BY c.COLLEGE_ID");
         preparedStatement.setString(1, email);
         resultSet = preparedStatement.executeQuery();
