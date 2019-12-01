@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 class ExecApplication
 {
     public static boolean adminLoggedIn;
@@ -10,13 +12,16 @@ class ExecApplication
 
     public static void main(String[] args)
     {
-        MainFrame clg = new MainFrame();
         adminLoggedIn = false;
         collegeLoggedIn = false;
         userLoggedIn = false;
         userSignedUp = false;
         marksEntered = false;
         new AdminLogin("mayank@gmail.com", "password");
+        MainFrame clg = new MainFrame();
+        clg.jfrmMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
         clg.jfrmMain.setVisible(true);
+        clg.setImage();
+
     }
 }
