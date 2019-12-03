@@ -66,7 +66,7 @@ class CollegeLoginDialog extends JDialog
         // add your code here
         // SQL CODE
         JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-        if (textField1.getText().isEmpty())
+        if (textField1.getText().isEmpty() && ExecApplication.isDev)
         {
             textField1.setText("atria@atria.edu");
             passwordField1.setText("password");

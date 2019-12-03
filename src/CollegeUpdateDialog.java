@@ -101,8 +101,12 @@ class CollegeUpdateDialog extends JDialog
         }
         if (valid)
         {
-            JOptionPane.showMessageDialog(null, "Updated Sucessfully.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
+            if (textFieldPercentage.getText().trim().isEmpty() && textFieldFees.getText().isEmpty() && textFieldContact.getText().isEmpty()) dispose();
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Updated Sucessfully.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
         }
     }
 

@@ -9,6 +9,7 @@ class ExecApplication
     public static String userEmail;
     public static boolean userSignedUp;
     public static boolean marksEntered;
+    public static boolean isDev;
 
     public static void main(String[] args)
     {
@@ -17,6 +18,7 @@ class ExecApplication
         userLoggedIn = false;
         userSignedUp = false;
         marksEntered = false;
+        isDev = false;
         new AdminLogin("mayank@gmail.com", "password");
         MainFrame clg = new MainFrame();
         clg.jfrmMain.setExtendedState(JFrame.MAXIMIZED_BOTH);

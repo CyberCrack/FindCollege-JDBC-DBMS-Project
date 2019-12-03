@@ -19,6 +19,7 @@ class UserMarksDialog extends JDialog
     private JTextField textFieldMaths;
     private JTextField textFieldComputer;
     private JButton buttonSearch;
+    boolean isValid;
 
     public UserMarksDialog()
     {
@@ -28,6 +29,7 @@ class UserMarksDialog extends JDialog
         setTitle("Find Colleges");
         setSize(500, 400);
         setLocationRelativeTo(null);
+        isValid = false;
 
         buttonCancel.addActionListener(new ActionListener()
         {
@@ -60,6 +62,11 @@ class UserMarksDialog extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                if (textFieldChemistry.getText().isEmpty() || textFieldComputer.getText().isEmpty() || textFieldEnglish.getText().isEmpty() || textFieldHindi.getText().isEmpty() || textFieldMaths.getText().isEmpty() || textFieldPhysics.getText().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(null, "Please enter all the marks to continue.");
+                    return;
+                }
                 Marks marks = new Marks(Integer.parseInt(textFieldEnglish.getText().trim()), Integer.parseInt(textFieldHindi.getText().trim()), Integer.parseInt(textFieldMaths.getText().trim()), Integer.parseInt(textFieldPhysics.getText().trim()), Integer.parseInt(textFieldChemistry.getText().trim()), Integer.parseInt(textFieldComputer.getText().trim()));
                 try
                 {

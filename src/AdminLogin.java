@@ -92,7 +92,7 @@ class AdminLogin extends JDialog
     private void onOK()
     {
         // add your code here
-        if (textField1.getText().isEmpty())
+        if (textField1.getText().isEmpty() && ExecApplication.isDev)
         {
             textField1.setText(AdminLogin.email);
             passwordField1.setText(AdminLogin.password);

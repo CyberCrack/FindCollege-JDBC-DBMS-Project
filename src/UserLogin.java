@@ -62,7 +62,7 @@ class UserLogin extends JDialog
     private void onOK() throws SQLException
     {
         JDBC_SQL_Execute jdbc_sql_execute = new JDBC_SQL_Execute();
-        if (textField1.getText().trim().isEmpty())
+        if (textField1.getText().trim().isEmpty() && ExecApplication.isDev)
         {
             textField1.setText("rakshitnaik79@gmail.com");
             passwordField1.setText("pass");

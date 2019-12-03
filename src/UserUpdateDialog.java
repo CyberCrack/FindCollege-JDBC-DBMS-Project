@@ -79,10 +79,16 @@ class UserUpdateDialog extends JDialog
             } else jdbc_sql_execute.StudentUpdate(textFieldEmail.getText().trim(), ExecApplication.userEmail, 2);
         }
         if (textFieldLocation.getText().trim().length() != 0) jdbc_sql_execute.StudentUpdate(textFieldLocation.getText().trim(), ExecApplication.userEmail, 3);
+
+
         if (valid)
         {
-            JOptionPane.showMessageDialog(null, "Update Successful.");
-            dispose();
+            if (textFieldContact.getText().isEmpty() && textFieldEmail.getText().isEmpty() && textFieldLocation.getText().isEmpty()) dispose();
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Update Successful.");
+                dispose();
+            }
         }
 
     }
