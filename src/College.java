@@ -1,5 +1,4 @@
-class College
-{
+public class College {
     private int college_id;
     private String name;
     private float percentage;
